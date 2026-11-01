@@ -1,0 +1,281 @@
+{
+  "map_id": 76,
+  "kind": "separate local diagnostic; not original Kaggle execution",
+  "device": "xpu",
+  "torch": "2.12.0+xpu",
+  "board": [
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      1,
+      2,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      3,
+      4,
+      1,
+      4,
+      2,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      1,
+      4,
+      2,
+      4,
+      1,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      1,
+      1,
+      2,
+      4,
+      1,
+      0
+    ],
+    [
+      0,
+      1,
+      0,
+      0,
+      1,
+      2,
+      4,
+      4,
+      1,
+      0
+    ],
+    [
+      0,
+      1,
+      2,
+      1,
+      1,
+      1,
+      2,
+      1,
+      1,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  ],
+  "targets": [
+    [
+      3,
+      8
+    ],
+    [
+      4,
+      8
+    ],
+    [
+      5,
+      6
+    ],
+    [
+      6,
+      6
+    ],
+    [
+      7,
+      5
+    ],
+    [
+      8,
+      2
+    ],
+    [
+      8,
+      6
+    ]
+  ],
+  "benchmark": {
+    "paper_astar": {
+      "solved": false,
+      "expansions": 140681,
+      "time_sec": 360.001
+    },
+    "ensemble_risk": {
+      "solved": true,
+      "expansions": 21780,
+      "time_sec": 292.734
+    }
+  },
+  "selection": "Deepest non-goal popped node up to depth 120 from the paper diagnostic prefix; not a proof of deadlock",
+  "diagnostics": {
+    "paper_astar": {
+      "solved": false,
+      "expansions": 10000,
+      "time_sec": 37.484904527664185,
+      "trace_limit_sec": 60,
+      "selected_branch": {
+        "depth": 28,
+        "actions": [
+          6,
+          6,
+          8,
+          8,
+          2,
+          5,
+          4,
+          7,
+          5,
+          5,
+          4,
+          2,
+          8,
+          1,
+          6,
+          2,
+          2,
+          3,
+          6,
+          3,
+          3,
+          3,
+          3,
+          8,
+          5,
+          5,
+          5,
+          5
+        ],
+        "expanded_when_seen": 7326,
+        "is_goal": false
+      },
+      "source_sha256": "aaa1c1eb29bd397fa7c45bd81c8faaf40f9cfb15e642977c27711e5aa3a4013a"
+    },
+    "ensemble_risk": {
+      "solved": true,
+      "expansions": 21753,
+      "time_sec": 391.96551632881165,
+      "actions": [
+        6,
+        6,
+        8,
+        6,
+        6,
+        8,
+        8,
+        8,
+        5,
+        5,
+        3,
+        2,
+        8,
+        6,
+        3,
+        3,
+        3,
+        3,
+        3,
+        8,
+        5,
+        5,
+        8,
+        4,
+        5,
+        5,
+        4,
+        7,
+        6,
+        6,
+        2,
+        8,
+        8,
+        5,
+        3,
+        8,
+        5,
+        1,
+        6,
+        3,
+        6,
+        6,
+        7,
+        7,
+        5,
+        7,
+        5,
+        5,
+        4,
+        2,
+        2,
+        5,
+        5,
+        4,
+        4
+      ],
+      "cost": 55.0,
+      "trace_limit_sec": 900,
+      "source_sha256": "a47595ad681f55a87d8faa620c8ab03d9cf896f3c4f33f3b6c8517c13b2da408",
+      "verified_replay": true
+    }
+  }
+}

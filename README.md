@@ -94,3 +94,8 @@ causes. “Calibrated” identifies the gate setting, not statistical error cali
 Uncertainty has not been established as a predictor of distance error. Learned
 heuristics do not guarantee optimal solutions. Upstream CC0 text is preserved
 in `licenses/UPSTREAM_CC0.txt`; no new rights over checkpoints are asserted.
+
+
+## Gallery and figures
+
+Browse the [visual gallery and captions](sokoban_visuals_v2/README.md) for plots, SVG exports and animated Sokoban replays. Open [gallery.html](sokoban_visuals_v2/gallery.html) locally for the complete HTML layout. The Map 76 animations are separately captured diagnostic trajectories, with benchmark numbers and provenance clearly labelled.

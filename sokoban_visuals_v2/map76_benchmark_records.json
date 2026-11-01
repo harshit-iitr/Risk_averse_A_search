@@ -1,0 +1,18 @@
+[
+  {
+    "map_id": 76,
+    "method": "paper_astar",
+    "solved": false,
+    "expansions": 140681,
+    "time_sec": 360.001,
+    "source": "completed live-log END record; raw plan/cost not yet exported"
+  },
+  {
+    "map_id": 76,
+    "method": "ensemble_risk",
+    "solved": true,
+    "expansions": 21780,
+    "time_sec": 292.734,
+    "source": "completed live-log END record; raw plan/cost not yet exported"
+  }
+]

@@ -1,3 +1,4 @@
 data/* -text -whitespace
 checkpoints/**/*.pt -text
 *.pt -text
+sokoban_visuals_v2/* -text -whitespace

@@ -1,0 +1,19 @@
+{
+  "map_id": 76,
+  "paper_branch_legal": true,
+  "paper_branch_moves": 28,
+  "paper_non_goal": true,
+  "off_target_corner_boxes": [
+    [
+      8,
+      8
+    ]
+  ],
+  "first_deadlock_move": 17,
+  "trajectory_source": "separate instrumented local XPU diagnostic",
+  "benchmark_number_source": "original completed Kaggle log records",
+  "risk_solution_available": true,
+  "risk_solution_legal": true,
+  "risk_goal_verified": true,
+  "risk_moves": 55
+}
