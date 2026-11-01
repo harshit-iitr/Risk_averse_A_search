@@ -1,0 +1,3 @@
+data/* -text -whitespace
+checkpoints/**/*.pt -text
+*.pt -text

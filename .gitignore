@@ -1,0 +1,12 @@
+__pycache__/
+*.py[cod]
+.venv*/
+*.log
+*.tmp
+*.zip
+.env
+*.key
+*.pem
+kaggle*.json
+output/
+data/*.generation.json

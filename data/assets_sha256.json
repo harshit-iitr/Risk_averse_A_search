@@ -1,0 +1,13 @@
+{
+  "finalSok3_pytorch.pt": "076ff786026461279e6a68d114893c2916a4b322c807a358850d86a7978edb4a",
+  "checkpoints/ensemble/ensemble_model_0.pt": "c771e8552eb30d82171e22a9602ecef2f1c23a2b568e19384094a09f1c7edd3f",
+  "checkpoints/ensemble/ensemble_model_1.pt": "6ff0ffd33151426c7d204bfd463036b4cbadb4c3dfa46faf8e0dfad07d821457",
+  "checkpoints/ensemble/ensemble_model_2.pt": "4d2d13b827ba63d19ff37d250a54273ede08846eb9c3d5bf2ee2aaa1fbfc6132",
+  "checkpoints/ensemble/ensemble_model_3.pt": "e6bfdd80f87d9dab99b8b9f7122714aba6c105661351ae299adf004b62d58757",
+  "checkpoints/ensemble/ensemble_model_4.pt": "32aefb590d7b0673ce674cd98b8789237fa2b1adad0d5d74cadf9f4ef205598a",
+  "data/sokoban_3box_test.txt": "9ea3a657d441af7a6af3f6fea2d1f1b31ec768df194746f59ab0fbcbf977cd5a",
+  "data/sokoban_3box_train.txt": "21f866e7ae0ebb479d5fb91a734ee0dcd6b2c879cc64ed6e9a863d4c4e5bf2fc",
+  "data/sokoban_5box_test.txt": "28ca622f146c6d92bda5971886d070f15a00aa68cc7d7ff2c94203b56cda2b55",
+  "data/sokoban_7box_original_test.provenance.json": "e8113d7e921521c82300d34e4bb04d8dc27d5fb8e82b2fb1ef91c81d4790d882",
+  "data/sokoban_7box_original_test.txt": "26335b858bf347c0a4226e2cd7fa779d6576433d18a0723d61079e6b50303a0f"
+}

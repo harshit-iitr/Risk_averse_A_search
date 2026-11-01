@@ -1,0 +1,18 @@
+{
+  "boxes": 3,
+  "hardware": "XPU",
+  "timeout_sec": 360,
+  "max_expansions": 1000000,
+  "classical_max_expansions": 1000000,
+  "source_repository": "harshit-iitr/Confidence_aware_a_search",
+  "source_commit": "dff2392aafd9447cefed3fe7a3bf835305309399",
+  "source_file_sha256": "9f638c034e25658e0ff05e94e01748f1c59b9143ff9be5d6a0b6389653e33ebd",
+  "notes": [
+    "Recorded historical flags are preserved; these CSVs do not contain full action plans."
+  ],
+  "methods": [
+    "single_astar",
+    "ensemble_conf_020"
+  ],
+  "records": 400
+}

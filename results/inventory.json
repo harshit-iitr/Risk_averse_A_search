@@ -1,0 +1,77 @@
+[
+  {
+    "run": "iid_3box_legacy",
+    "boxes": 3,
+    "records": 1000,
+    "methods": [
+      "classical_astar",
+      "paper_astar",
+      "paper_gbfs",
+      "fixed_hybrid_astar",
+      "paper_mc_astar"
+    ]
+  },
+  {
+    "run": "iid_3box_trained",
+    "boxes": 3,
+    "records": 400,
+    "methods": [
+      "single_astar",
+      "ensemble_conf_020"
+    ]
+  },
+  {
+    "run": "ood_5box_legacy",
+    "boxes": 5,
+    "records": 400,
+    "methods": [
+      "classical_astar",
+      "paper_astar",
+      "paper_gbfs",
+      "paper_mc_astar"
+    ]
+  },
+  {
+    "run": "ood_5box_trained",
+    "boxes": 5,
+    "records": 200,
+    "methods": [
+      "single_astar",
+      "ensemble_conf_020"
+    ]
+  },
+  {
+    "run": "ood_5box_calibrated",
+    "boxes": 5,
+    "records": 200,
+    "methods": [
+      "single_mc_astar",
+      "ensemble_conf_050"
+    ]
+  },
+  {
+    "run": "ood_5box_risk",
+    "boxes": 5,
+    "records": 200,
+    "methods": [
+      "ensemble_risk",
+      "ensemble_conf_050"
+    ]
+  },
+  {
+    "run": "ood_7box_snapshot82",
+    "boxes": 7,
+    "records": 661,
+    "methods": [
+      "classical_astar",
+      "paper_astar",
+      "paper_gbfs",
+      "paper_mc_astar",
+      "single_astar",
+      "single_mc_astar",
+      "ensemble_conf_020",
+      "ensemble_conf_050",
+      "ensemble_risk"
+    ]
+  }
+]
