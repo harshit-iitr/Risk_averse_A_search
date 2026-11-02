@@ -31,11 +31,7 @@ attempts are listed separately in the report. Paper Learned GBFS has only five
 seven-box records. These are separate evaluation cohorts, explicitly labelled.
 
 The six existing checkpoints and datasets are copied byte-for-byte. Asset hashes
-are in `data/assets_sha256.json`. The historical name “Paper Learned” does not
-establish a verified reproduction of the published paper. “Scratch Model #0” is
-a retained experiment label; the provided training utility supports both fresh
-initialization and warm starts, so the name alone is not training provenance.
-
+are in `data/assets_sha256.json`. 
 ## Methods
 
 Let `p_m(s)` be each member's own online percentile, with mean `mu_p`, variance
