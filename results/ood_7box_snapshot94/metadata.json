@@ -88,7 +88,19 @@
     79,
     80,
     81,
-    82
+    82,
+    83,
+    84,
+    85,
+    86,
+    87,
+    88,
+    89,
+    90,
+    91,
+    92,
+    93,
+    94
   ],
   "archived_maps": [
     1,
@@ -135,9 +147,7 @@
     42,
     43,
     44,
-    45
-  ],
-  "live_log_maps": [
+    45,
     46,
     47,
     48,
@@ -174,11 +184,24 @@
     79,
     80,
     81,
-    82
+    82,
+    83,
+    84,
+    85,
+    86,
+    87,
+    88,
+    89,
+    90,
+    91,
+    92,
+    93,
+    94
   ],
+  "live_log_maps": [],
   "notes": [
-    "82/100 reporting snapshot. Live-log records have no locally exported action plans or solution costs.",
-    "Paper Learned GBFS has records for maps 1-5 only; not an 82-map evaluation."
+    "94/100 common-cohort snapshot with archived records and independently replayed successful plans.",
+    "Paper Learned GBFS covers maps 1-5 only. Map 95 is partial and reported separately."
   ],
   "methods": [
     "classical_astar",
@@ -191,5 +214,7 @@
     "ensemble_conf_050",
     "ensemble_risk"
   ],
-  "records": 661
+  "records": 757,
+  "kaggle_session": "championsproo/sokoban7-original-046-100-9fc3833398",
+  "download_archive_sha256": "304d716f7ea0ad510c7556eb8020e56da65f658a556c0fa4a8cd455391a194a7"
 }

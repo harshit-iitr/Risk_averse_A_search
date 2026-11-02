@@ -14,6 +14,7 @@ from src.protocol import replay_plan
 def build():
     rows = {3: [], 5: [], 7: []}
     grouped = {}
+    partial = []
     for folder in sorted((ROOT / 'results').iterdir()):
         if not folder.is_dir() or not (folder / 'metadata.json').exists():
             continue
@@ -21,6 +22,9 @@ def build():
         records = [json.loads(line) for line in (folder / 'records.jsonl').read_text().splitlines()]
         assert all(r['method'] in METHODS for r in records)
         assert len({(r['map_id'], r['method']) for r in records}) == len(records)
+        if meta.get('partial'):
+            partial.extend(records)
+            continue
         for method in dict.fromkeys(r['method'] for r in records):
             selected = [r for r in records if r['method'] == method]
             solved = [r for r in selected if r['solved']]
@@ -57,12 +61,13 @@ hardware and budgets; historical groups are not one controlled cross-device
 comparison. Expansions and costs use solved maps. Compare expansions on mutually
 solved maps for a paired claim. Unperformed combinations are not invented.
 
-The seven-box evaluation is an **82/100 snapshot**: maps 1–45 have archived raw
-records; maps 46–82 are completed live-log records whose action plans and costs
-were not exported at the reporting cutoff. Its Paper Learned GBFS row covers
-only maps 1–5 and must not be interpreted as an 82-map solve rate. Later maps
-are outside this report. Method names retain historical terminology; checkpoint
-identity as a published paper model is not verified.
+The seven-box comparison uses **94/100 fixed maps**, with archived raw records
+and independently replayed successful plans throughout. The completed Kaggle
+session stopped partway through map 95; its three completed attempts are listed
+separately and excluded from the common-cohort table and paired comparisons.
+Paper Learned GBFS covers only maps 1–5, not the 94-map cohort. Method names
+retain historical terminology; checkpoint identity as a published paper model
+is not verified.
 '''
     for boxes in [3, 5, 7]:
         md += f'\n## {boxes}-box Sokoban — {"IID" if boxes == 3 else "OOD"}\n\n'
@@ -71,12 +76,18 @@ identity as a published paper model is not verified.
         for r in sorted(rows[boxes], key=lambda r: (list(METHODS).index(r['method']), r['hardware'])):
             vals = ['—' if r[k] is None else f'{r[k]:,.1f}' for k in ('mean_expansions', 'median_expansions', 'p90_expansions', 'mean_cost')]
             md += f'| {r["algorithm"]} | {r["hardware"]} | {r["timeout_sec"]:g} / {r["max_expansions"]:,} | {r["solved"]}/{r["evaluated"]} ({100*r["solved"]/r["evaluated"]:.1f}%) | ' + ' | '.join(vals) + ' |\n'
+    md += '\n## Partial map 95 — excluded from the 94-map comparison\n\n'
+    md += '| Method | Solved | Expansions | Search time (s) | Cost |\n|---|---|---:|---:|---:|\n'
+    for r in partial:
+        cost = '—' if r.get('cost') is None else f"{r['cost']:g}"
+        md += f"| {METHODS[r['method']]} | {r['solved']} | {r['expansions']:,} | {r['time_sec']:.2f} | {cost} |\n"
+    md += '\nOther methods did not finish map 95; missing attempts are not failures. Fixed 50/50 Hybrid A* has no seven-box results.\n'
     md += '\n## Paired comparisons within recorded runs\n\n'
     for p in paired:
         md += f'- `{p["run"]}`: {METHODS[p["method"]]} vs {METHODS[p["baseline"]]}: N={p["common"]}; {p["wins"]}W/{p["ties"]}T/{p["losses"]}L; mean expansion reduction {p["mean_reduction_pct"]:.2f}% (negative means more expansions).\n'
-    md += '\n## Limitations\n\nMC dropout is model-dependent: scratch M0 solves 93/100 five-box maps versus 77/100 for its MC variant, and 65/82 seven-box maps versus 53/82. Inference-time perturbation sensitivity, altered rankings and gating interactions are hypotheses, not demonstrated causes. Disagreement has not been established as a calibrated predictor of distance error. These learned search methods do not guarantee optimal plans. “Calibrated” names a gating configuration, not statistical error calibration.\n'
+    md += '\n## Limitations\n\nMC dropout is model-dependent: scratch M0 solves 93/100 five-box maps versus 77/100 for its MC variant, and also solves more seven-box maps than its MC variant (see the table). Inference-time perturbation sensitivity, altered rankings and gating interactions are hypotheses, not demonstrated causes. Disagreement has not been established as a calibrated predictor of distance error. These learned search methods do not guarantee optimal plans. “Calibrated” names a gating configuration, not statistical error calibration.\n'
     (ROOT / 'RESULTS.md').write_text(md, encoding='utf-8')
-    (ROOT / 'results/summary.json').write_text(json.dumps({'tables': rows, 'paired': paired}, indent=2), encoding='utf-8')
+    (ROOT / 'results/summary.json').write_text(json.dumps({'tables': rows, 'paired': paired, 'partial_map95': partial}, indent=2), encoding='utf-8')
     print('Saved RESULTS.md; table rows:', {b: len(r) for b, r in rows.items()})
     return rows
 

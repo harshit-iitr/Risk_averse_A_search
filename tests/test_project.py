@@ -59,7 +59,7 @@ class ProjectTests(unittest.TestCase):
                 if row.get('evidence') == 'archived_plan' and row['solved']:
                     self.assertTrue(replay_plan(boards[row['map_id'] - 1], row['actions']))
             count += len(rows)
-        self.assertEqual(count, 3061)
+        self.assertEqual(count, 3160)
 
     def test_percentile_uncertainty_is_offset_invariant(self):
         class Model(torch.nn.Module):

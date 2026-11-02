@@ -59,9 +59,9 @@
     ]
   },
   {
-    "run": "ood_7box_snapshot82",
+    "run": "ood_7box_snapshot94",
     "boxes": 7,
-    "records": 661,
+    "records": 757,
     "methods": [
       "classical_astar",
       "paper_astar",
@@ -72,6 +72,16 @@
       "ensemble_conf_020",
       "ensemble_conf_050",
       "ensemble_risk"
+    ]
+  },
+  {
+    "run": "ood_7box_partial95",
+    "boxes": 7,
+    "records": 3,
+    "methods": [
+      "classical_astar",
+      "paper_astar",
+      "paper_mc_astar"
     ]
   }
 ]

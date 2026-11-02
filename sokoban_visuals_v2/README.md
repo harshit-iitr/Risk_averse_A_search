@@ -1,3 +1,5 @@
+> These figures show the earlier 82-map snapshot. See [the current results](../RESULTS.md#7-box-sokoban--ood) for the 94-map comparison and partial map 95.
+
 # Clean Sokoban visuals — six methods and a genuine failure case
 
 ## What changed

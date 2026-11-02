@@ -1,0 +1,26 @@
+{
+  "boxes": 7,
+  "hardware": "Tesla T4",
+  "timeout_sec": 360,
+  "max_expansions": 1000000,
+  "source_repository": "harshit-iitr/Confidence_aware_a_search",
+  "source_commit": "dff2392aafd9447cefed3fe7a3bf835305309399",
+  "frozen_dataset_sha256": "26335b858bf347c0a4226e2cd7fa779d6576433d18a0723d61079e6b50303a0f",
+  "complete_maps": [],
+  "archived_maps": [
+    95
+  ],
+  "live_log_maps": [],
+  "notes": [
+    "Only three retained methods completed map 95 before the session ended. Excluded from common-cohort comparisons."
+  ],
+  "methods": [
+    "classical_astar",
+    "paper_astar",
+    "paper_mc_astar"
+  ],
+  "records": 3,
+  "kaggle_session": "championsproo/sokoban7-original-046-100-9fc3833398",
+  "download_archive_sha256": "304d716f7ea0ad510c7556eb8020e56da65f658a556c0fa4a8cd455391a194a7",
+  "partial": true
+}

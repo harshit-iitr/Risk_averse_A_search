@@ -24,11 +24,11 @@ domain/method combination is treated as an executed experiment.
 
 Read [RESULTS.md](RESULTS.md) for the three tables and paired comparisons.
 Historical three-box and five-box results retain their original hardware and
-budgets. Seven-box reporting uses **82 of 100 fixed maps**, 360 seconds and
-1,000,000 expansions per method. Its first 45 maps have archived raw records;
-maps 46–82 have completed live-log observations with plans/costs still pending
-raw export. Paper Learned GBFS has only five seven-box records. These are
-separate evaluation cohorts, explicitly labelled in the report.
+budgets. Seven-box reporting uses **94 of 100 fixed maps**, 360 seconds and
+1,000,000 expansions per method. All successful saved plans replay independently.
+The completed session stopped partway through map 95; its three completed
+attempts are listed separately in the report. Paper Learned GBFS has only five
+seven-box records. These are separate evaluation cohorts, explicitly labelled.
 
 The six existing checkpoints and datasets are copied byte-for-byte. Asset hashes
 are in `data/assets_sha256.json`. The historical name “Paper Learned” does not
@@ -97,5 +97,7 @@ in `licenses/UPSTREAM_CC0.txt`; no new rights over checkpoints are asserted.
 
 
 ## Gallery and figures
+
+Gallery figures retain the earlier **82-map snapshot**; current 94-map numbers are in RESULTS.md.
 
 Browse the [visual gallery and captions](sokoban_visuals_v2/README.md) for plots, SVG exports and animated Sokoban replays. Open [gallery.html](sokoban_visuals_v2/gallery.html) locally for the complete HTML layout. The Map 76 animations are separately captured diagnostic trajectories, with benchmark numbers and provenance clearly labelled.
