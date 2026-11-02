@@ -13,6 +13,9 @@
         "mean_expansions": 11133.261538461538,
         "median_expansions": 3370.0,
         "p90_expansions": 36299.799999999996,
+        "mean_search_time_sec": 0.2782645,
+        "mean_elapsed_time_sec": 0.2782645,
+        "timing_scope": "search_only",
         "mean_wall_time_sec": null,
         "mean_cost": 26.01025641025641
       },
@@ -28,6 +31,9 @@
         "mean_expansions": 1262.91,
         "median_expansions": 224.5,
         "p90_expansions": 3694.1,
+        "mean_search_time_sec": 4.51666,
+        "mean_elapsed_time_sec": 4.51666,
+        "timing_scope": "search_only",
         "mean_wall_time_sec": null,
         "mean_cost": 26.6
       },
@@ -43,6 +49,9 @@
         "mean_expansions": 944.425,
         "median_expansions": 43.0,
         "p90_expansions": 1689.7999999999997,
+        "mean_search_time_sec": 2.9184555,
+        "mean_elapsed_time_sec": 2.9184555,
+        "timing_scope": "search_only",
         "mean_wall_time_sec": null,
         "mean_cost": 31.315
       },
@@ -58,6 +67,9 @@
         "mean_expansions": 762.155,
         "median_expansions": 155.5,
         "p90_expansions": 1719.2999999999995,
+        "mean_search_time_sec": 3.6552215,
+        "mean_elapsed_time_sec": 3.6552215,
+        "timing_scope": "search_only",
         "mean_wall_time_sec": null,
         "mean_cost": 29.0
       },
@@ -73,6 +85,9 @@
         "mean_expansions": 595.98,
         "median_expansions": 92.0,
         "p90_expansions": 1393.4999999999998,
+        "mean_search_time_sec": 3.0424545,
+        "mean_elapsed_time_sec": 3.0424545,
+        "timing_scope": "search_only",
         "mean_wall_time_sec": null,
         "mean_cost": 28.405
       },
@@ -88,6 +103,9 @@
         "mean_expansions": 1222.31,
         "median_expansions": 121.0,
         "p90_expansions": 3446.7999999999997,
+        "mean_search_time_sec": 3.8639384999999997,
+        "mean_elapsed_time_sec": 3.8639384999999997,
+        "timing_scope": "search_only",
         "mean_wall_time_sec": null,
         "mean_cost": 27.05
       },
@@ -103,6 +121,9 @@
         "mean_expansions": 377.92,
         "median_expansions": 90.0,
         "p90_expansions": 708.0999999999991,
+        "mean_search_time_sec": 5.929284,
+        "mean_elapsed_time_sec": 5.929284,
+        "timing_scope": "search_only",
         "mean_wall_time_sec": null,
         "mean_cost": 29.395
       }
@@ -120,6 +141,9 @@
         "mean_expansions": 7906.909090909091,
         "median_expansions": 3042.0,
         "p90_expansions": 20360.200000000008,
+        "mean_search_time_sec": 113.53002000000001,
+        "mean_elapsed_time_sec": 113.53002000000001,
+        "timing_scope": "search_only",
         "mean_wall_time_sec": null,
         "mean_cost": 36.42857142857143
       },
@@ -135,6 +159,9 @@
         "mean_expansions": 1553.4893617021276,
         "median_expansions": 513.0,
         "p90_expansions": 4697.700000000003,
+        "mean_search_time_sec": 44.728711999999994,
+        "mean_elapsed_time_sec": 44.728711999999994,
+        "timing_scope": "search_only",
         "mean_wall_time_sec": null,
         "mean_cost": 40.808510638297875
       },
@@ -150,6 +177,9 @@
         "mean_expansions": 41546.19642857143,
         "median_expansions": 26794.0,
         "p90_expansions": 104652.0,
+        "mean_search_time_sec": 2.5081650000000004,
+        "mean_elapsed_time_sec": 2.5081650000000004,
+        "timing_scope": "search_only",
         "mean_wall_time_sec": null,
         "mean_cost": 31.714285714285715
       },
@@ -165,6 +195,9 @@
         "mean_expansions": 2833.760563380282,
         "median_expansions": 1384.0,
         "p90_expansions": 8354.0,
+        "mean_search_time_sec": 25.272275999999998,
+        "mean_elapsed_time_sec": 25.272275999999998,
+        "timing_scope": "search_only",
         "mean_wall_time_sec": null,
         "mean_cost": 33.45070422535211
       },
@@ -180,6 +213,9 @@
         "mean_expansions": 2516.114285714286,
         "median_expansions": 346.0,
         "p90_expansions": 8529.800000000001,
+        "mean_search_time_sec": 22.946476999999994,
+        "mean_elapsed_time_sec": 22.946476999999994,
+        "timing_scope": "search_only",
         "mean_wall_time_sec": null,
         "mean_cost": 45.871428571428574
       },
@@ -195,6 +231,9 @@
         "mean_expansions": 1970.5333333333333,
         "median_expansions": 567.5,
         "p90_expansions": 6921.500000000001,
+        "mean_search_time_sec": 17.226566000000002,
+        "mean_elapsed_time_sec": 17.226566000000002,
+        "timing_scope": "search_only",
         "mean_wall_time_sec": null,
         "mean_cost": 38.3
       },
@@ -210,6 +249,9 @@
         "mean_expansions": 1354.7978723404256,
         "median_expansions": 393.0,
         "p90_expansions": 4122.2,
+        "mean_search_time_sec": 59.83533200000001,
+        "mean_elapsed_time_sec": 59.83533200000001,
+        "timing_scope": "search_only",
         "mean_wall_time_sec": null,
         "mean_cost": 41.59574468085106
       },
@@ -225,6 +267,9 @@
         "mean_expansions": 1391.5978260869565,
         "median_expansions": 501.5,
         "p90_expansions": 4065.6000000000026,
+        "mean_search_time_sec": 67.455462,
+        "mean_elapsed_time_sec": 67.455462,
+        "timing_scope": "search_only",
         "mean_wall_time_sec": null,
         "mean_cost": 40.45652173913044
       },
@@ -240,6 +285,9 @@
         "mean_expansions": 8740.41935483871,
         "median_expansions": 1436.0,
         "p90_expansions": 25827.2,
+        "mean_search_time_sec": 51.851121000000006,
+        "mean_elapsed_time_sec": 51.851121000000006,
+        "timing_scope": "search_only",
         "mean_wall_time_sec": null,
         "mean_cost": 37.505376344086024
       },
@@ -255,6 +303,9 @@
         "mean_expansions": 1614.9368421052632,
         "median_expansions": 549.0,
         "p90_expansions": 4601.8,
+        "mean_search_time_sec": 43.61590799999999,
+        "mean_elapsed_time_sec": 43.61590799999999,
+        "timing_scope": "search_only",
         "mean_wall_time_sec": null,
         "mean_cost": 41.0
       }
@@ -272,6 +323,9 @@
         "mean_expansions": 296693.7659574468,
         "median_expansions": 143415.0,
         "p90_expansions": 821621.3999999999,
+        "mean_search_time_sec": 40.9188619065792,
+        "mean_elapsed_time_sec": 41.69703658691485,
+        "timing_scope": "including_dispatch_setup",
         "mean_wall_time_sec": 41.69703658691485,
         "mean_cost": 36.680851063829785
       },
@@ -287,6 +341,9 @@
         "mean_expansions": 19496.871428571427,
         "median_expansions": 5769.5,
         "p90_expansions": 62287.100000000006,
+        "mean_search_time_sec": 127.58054927815782,
+        "mean_elapsed_time_sec": 127.66802623025524,
+        "timing_scope": "including_dispatch_setup",
         "mean_wall_time_sec": 127.66802623025524,
         "mean_cost": 39.7
       },
@@ -302,6 +359,9 @@
         "mean_expansions": 40236.75,
         "median_expansions": 1606.5,
         "p90_expansions": 111265.20000000003,
+        "mean_search_time_sec": 140.82458171844482,
+        "mean_elapsed_time_sec": 140.89178590659986,
+        "timing_scope": "including_dispatch_setup",
         "mean_wall_time_sec": 140.89178590659986,
         "mean_cost": 46.0
       },
@@ -317,6 +377,9 @@
         "mean_expansions": 9224.986486486487,
         "median_expansions": 1340.5,
         "p90_expansions": 27127.300000000007,
+        "mean_search_time_sec": 100.28719536040691,
+        "mean_elapsed_time_sec": 100.37075346865927,
+        "timing_scope": "including_dispatch_setup",
         "mean_wall_time_sec": 100.37075346865927,
         "mean_cost": 43.74324324324324
       },
@@ -332,6 +395,9 @@
         "mean_expansions": 13638.46052631579,
         "median_expansions": 1936.5,
         "p90_expansions": 44062.0,
+        "mean_search_time_sec": 97.05962528066432,
+        "mean_elapsed_time_sec": 97.1247455537767,
+        "timing_scope": "including_dispatch_setup",
         "mean_wall_time_sec": 97.1247455537767,
         "mean_cost": 42.60526315789474
       },
@@ -347,6 +413,9 @@
         "mean_expansions": 14248.983606557376,
         "median_expansions": 6997.0,
         "p90_expansions": 35963.0,
+        "mean_search_time_sec": 157.12882056895722,
+        "mean_elapsed_time_sec": 157.2513257379574,
+        "timing_scope": "including_dispatch_setup",
         "mean_wall_time_sec": 157.2513257379574,
         "mean_cost": 40.83606557377049
       },
@@ -362,6 +431,9 @@
         "mean_expansions": 3349.5753424657532,
         "median_expansions": 902.0,
         "p90_expansions": 11752.79999999999,
+        "mean_search_time_sec": 112.70606191107568,
+        "mean_elapsed_time_sec": 112.72858540020195,
+        "timing_scope": "including_dispatch_setup",
         "mean_wall_time_sec": 112.72858540020195,
         "mean_cost": 44.76712328767123
       },
@@ -377,6 +449,9 @@
         "mean_expansions": 3412.2083333333335,
         "median_expansions": 826.5,
         "p90_expansions": 11117.999999999995,
+        "mean_search_time_sec": 116.94677730316812,
+        "mean_elapsed_time_sec": 116.96914361618089,
+        "timing_scope": "including_dispatch_setup",
         "mean_wall_time_sec": 116.96914361618089,
         "mean_cost": 44.861111111111114
       },
@@ -392,6 +467,9 @@
         "mean_expansions": 3112.945945945946,
         "median_expansions": 735.5,
         "p90_expansions": 11788.300000000003,
+        "mean_search_time_sec": 107.22647778024064,
+        "mean_elapsed_time_sec": 107.24604443840423,
+        "timing_scope": "including_dispatch_setup",
         "mean_wall_time_sec": 107.24604443840423,
         "mean_cost": 45.66216216216216
       }

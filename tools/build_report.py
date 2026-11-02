@@ -31,6 +31,9 @@ def build():
             exp = [r['expansions'] for r in solved]
             costs = [r.get('cost') for r in solved]
             wall_times = [r.get('wall_time_sec') for r in selected]
+            search_times = [r['time_sec'] for r in selected]
+            assert all(np.isfinite(v) and v >= 0 for v in search_times)
+            has_dispatch_times = all(v is not None for v in wall_times)
             mean = lambda v: float(np.mean(v)) if v else None
             row = {'run': folder.name, 'method': method, 'algorithm': METHODS[method],
                    'hardware': meta['hardware'], 'timeout_sec': meta['timeout_sec'],
@@ -38,6 +41,9 @@ def build():
                    'evaluated': len(selected), 'solved': len(solved),
                    'mean_expansions': mean(exp), 'median_expansions': float(np.median(exp)) if exp else None,
                    'p90_expansions': float(np.percentile(exp, 90)) if exp else None,
+                   'mean_search_time_sec': mean(search_times),
+                   'mean_elapsed_time_sec': mean(wall_times if has_dispatch_times else search_times),
+                   'timing_scope': 'including_dispatch_setup' if has_dispatch_times else 'search_only',
                    'mean_wall_time_sec': mean(wall_times) if all(v is not None for v in wall_times) else None,
                    'mean_cost': mean(costs) if costs and all(c is not None for c in costs) else None}
             rows[meta['boxes']].append(row)
@@ -62,9 +68,12 @@ Only the ten methods in `src/methods.py` are supported. Tables retain recorded
 hardware and budgets; historical groups are not one controlled cross-device
 comparison. Expansions and costs use solved maps. Compare expansions on mutually
 solved maps for a paired claim. Unperformed combinations are not invented.
-The last column is mean wall-clock seconds across **all attempts, including
-failures**, including dispatch setup. A dash means wall-clock measurements were
-not recorded; historical search-only timings are not substituted.
+The last column is mean elapsed wall-clock seconds across **all attempts,
+including failures**. **S** = search-only elapsed time (historical 3/5-box runs);
+**D** = elapsed time including dispatch setup (7-box runs). These scopes differ:
+S does not measure the full invocation. Neither includes one-time model loading
+or dataset generation. The JSON summary preserves both measurements separately
+where available. Hardware and budgets must also be considered when comparing times.
 
 The seven-box comparison uses **94/100 fixed maps**, with archived raw records
 and independently replayed successful plans throughout. The completed Kaggle
@@ -76,10 +85,12 @@ is not verified.
 '''
     for boxes in [3, 5, 7]:
         md += f'\n## {boxes}-box Sokoban — {"IID" if boxes == 3 else "OOD"}\n\n'
-        md += '| Method | Hardware | Budget (s / exp.) | Solved | Mean exp. | Median exp. | P90 exp. | Mean cost | Mean wall time (s) |\n'
+        md += '| Method | Hardware | Budget (s / exp.) | Solved | Mean exp. | Median exp. | P90 exp. | Mean cost | Mean elapsed wall time (s) |\n'
         md += '|---|---|---|---:|---:|---:|---:|---:|---:|\n'
         for r in sorted(rows[boxes], key=lambda r: (list(METHODS).index(r['method']), r['hardware'])):
-            vals = ['—' if r[k] is None else f'{r[k]:,.1f}' for k in ('mean_expansions', 'median_expansions', 'p90_expansions', 'mean_cost', 'mean_wall_time_sec')]
+            vals = ['—' if r[k] is None else f'{r[k]:,.1f}' for k in ('mean_expansions', 'median_expansions', 'p90_expansions', 'mean_cost')]
+            marker = 'D' if r['timing_scope'] == 'including_dispatch_setup' else 'S'
+            vals.append(f"{r['mean_elapsed_time_sec']:,.2f} {marker}")
             md += f'| {r["algorithm"]} | {r["hardware"]} | {r["timeout_sec"]:g} / {r["max_expansions"]:,} | {r["solved"]}/{r["evaluated"]} ({100*r["solved"]/r["evaluated"]:.1f}%) | ' + ' | '.join(vals) + ' |\n'
     md += '\n## Partial map 95 — excluded from the 94-map comparison\n\n'
     md += '| Method | Solved | Expansions | Search time (s) | Cost | Wall time (s) |\n|---|---|---:|---:|---:|---:|\n'
