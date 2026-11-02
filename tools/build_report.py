@@ -30,6 +30,7 @@ def build():
             solved = [r for r in selected if r['solved']]
             exp = [r['expansions'] for r in solved]
             costs = [r.get('cost') for r in solved]
+            wall_times = [r.get('wall_time_sec') for r in selected]
             mean = lambda v: float(np.mean(v)) if v else None
             row = {'run': folder.name, 'method': method, 'algorithm': METHODS[method],
                    'hardware': meta['hardware'], 'timeout_sec': meta['timeout_sec'],
@@ -37,6 +38,7 @@ def build():
                    'evaluated': len(selected), 'solved': len(solved),
                    'mean_expansions': mean(exp), 'median_expansions': float(np.median(exp)) if exp else None,
                    'p90_expansions': float(np.percentile(exp, 90)) if exp else None,
+                   'mean_wall_time_sec': mean(wall_times) if all(v is not None for v in wall_times) else None,
                    'mean_cost': mean(costs) if costs and all(c is not None for c in costs) else None}
             rows[meta['boxes']].append(row)
             grouped[folder.name, method] = selected
@@ -60,6 +62,9 @@ Only the ten methods in `src/methods.py` are supported. Tables retain recorded
 hardware and budgets; historical groups are not one controlled cross-device
 comparison. Expansions and costs use solved maps. Compare expansions on mutually
 solved maps for a paired claim. Unperformed combinations are not invented.
+The last column is mean wall-clock seconds across **all attempts, including
+failures**, including dispatch setup. A dash means wall-clock measurements were
+not recorded; historical search-only timings are not substituted.
 
 The seven-box comparison uses **94/100 fixed maps**, with archived raw records
 and independently replayed successful plans throughout. The completed Kaggle
@@ -71,16 +76,16 @@ is not verified.
 '''
     for boxes in [3, 5, 7]:
         md += f'\n## {boxes}-box Sokoban — {"IID" if boxes == 3 else "OOD"}\n\n'
-        md += '| Method | Hardware | Budget (s / exp.) | Solved | Mean exp. | Median exp. | P90 exp. | Mean cost |\n'
-        md += '|---|---|---|---:|---:|---:|---:|---:|\n'
+        md += '| Method | Hardware | Budget (s / exp.) | Solved | Mean exp. | Median exp. | P90 exp. | Mean cost | Mean wall time (s) |\n'
+        md += '|---|---|---|---:|---:|---:|---:|---:|---:|\n'
         for r in sorted(rows[boxes], key=lambda r: (list(METHODS).index(r['method']), r['hardware'])):
-            vals = ['—' if r[k] is None else f'{r[k]:,.1f}' for k in ('mean_expansions', 'median_expansions', 'p90_expansions', 'mean_cost')]
+            vals = ['—' if r[k] is None else f'{r[k]:,.1f}' for k in ('mean_expansions', 'median_expansions', 'p90_expansions', 'mean_cost', 'mean_wall_time_sec')]
             md += f'| {r["algorithm"]} | {r["hardware"]} | {r["timeout_sec"]:g} / {r["max_expansions"]:,} | {r["solved"]}/{r["evaluated"]} ({100*r["solved"]/r["evaluated"]:.1f}%) | ' + ' | '.join(vals) + ' |\n'
     md += '\n## Partial map 95 — excluded from the 94-map comparison\n\n'
-    md += '| Method | Solved | Expansions | Search time (s) | Cost |\n|---|---|---:|---:|---:|\n'
+    md += '| Method | Solved | Expansions | Search time (s) | Cost | Wall time (s) |\n|---|---|---:|---:|---:|---:|\n'
     for r in partial:
         cost = '—' if r.get('cost') is None else f"{r['cost']:g}"
-        md += f"| {METHODS[r['method']]} | {r['solved']} | {r['expansions']:,} | {r['time_sec']:.2f} | {cost} |\n"
+        md += f"| {METHODS[r['method']]} | {r['solved']} | {r['expansions']:,} | {r['time_sec']:.2f} | {cost} | {r['wall_time_sec']:.2f} |\n"
     md += '\nOther methods did not finish map 95; missing attempts are not failures. Fixed 50/50 Hybrid A* has no seven-box results.\n'
     md += '\n## Paired comparisons within recorded runs\n\n'
     for p in paired:
