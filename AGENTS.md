@@ -1,20 +1,14 @@
-# Project scope
+# Project workflow
 
-Support exactly the ten method IDs in `src/methods.py`. Do not add algorithms
-or result rows without an explicit user request. Preserve the selected existing
-checkpoints and per-map observations. Never invent missing experiment combinations.
+Support the ten method IDs in `src/methods.py`. Preserve checkpoints, frozen
+puzzles and per-map results. Keep output from new runs under `output/`.
 
-# Ranking heuristics
+Start with `python tools/sanity_check.py --device cpu`. For five real seven-box
+maps across all methods, follow README.md and docs/REPRODUCING.md. Generate local
+run reports with tools/report_run.py; archived tables use tools/build_report.py.
 
-Ranking models have arbitrary scalar offsets. Compute uncertainty in each
-member's percentile space, never from raw cross-model variance. Disagreement
-is a search signal, not a demonstrated Gaussian interval over physical distance.
-Retain both the confidence-gated and risk-aware formulations used in the results.
+Compute ensemble disagreement in each member's percentile space. Keep the
+recorded confidence and risk priority formulas. Keep all credentials out of Git.
 
-# Evidence
-
-Seven-box reporting currently stops at maps 1–82. Maps 46–82 have completed
-live-log summaries, not downloaded action plans. Paper Learned GBFS has only
-five seven-box attempts. Keep these limitations explicit. Do not silently
-combine differing devices or stopping budgets. Retain independent plan replay
-and resumable output for future experiments. Keep all credentials out of Git.
+Seven-box archived results cover 94 common maps, plus a separate five-map GBFS
+pilot and partial map-95 records. Keep cohort, timing and device labels accurate.

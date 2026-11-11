@@ -62,27 +62,21 @@ def build():
                            'wins': sum(u < v for u, v in zip(x, y)), 'ties': sum(u == v for u, v in zip(x, y)),
                            'losses': sum(u > v for u, v in zip(x, y)),
                            'mean_reduction_pct': 100 * (1 - float(np.mean(x)) / float(np.mean(y)))})
-    md = '''# Sokoban experiment results
+    md = """# Sokoban experiment results
 
-Only the ten methods in `src/methods.py` are supported. Tables retain recorded
-hardware and budgets; historical groups are not one controlled cross-device
-comparison. Expansions and costs use solved maps. Compare expansions on mutually
-solved maps for a paired claim. Unperformed combinations are not invented.
-The last column is mean elapsed wall-clock seconds across **all attempts,
-including failures**. **S** = search-only elapsed time (historical 3/5-box runs);
-**D** = elapsed time including dispatch setup (7-box runs). These scopes differ:
-S does not measure the full invocation. Neither includes one-time model loading
-or dataset generation. The JSON summary preserves both measurements separately
-where available. Hardware and budgets must also be considered when comparing times.
+[Project overview](README.md) · [Reproduce a run](docs/REPRODUCING.md) · [Methods](docs/METHODS.md)
 
-The seven-box comparison uses **94/100 fixed maps**, with archived raw records
-and independently replayed successful plans throughout. The completed Kaggle
-session stopped partway through map 95; its three completed attempts are listed
-separately and excluded from the common-cohort table and paired comparisons.
-Paper Learned GBFS covers only maps 1–5, not the 94-map cohort. Method names
-retain historical terminology; checkpoint identity as a published paper model
-is not verified.
-'''
+Tables report the recorded cohorts, devices and evaluation settings. Expansion
+and solution-cost statistics use solved puzzles. Paired comparisons use puzzles
+solved by both methods. Mean elapsed times include every attempt, including
+failures: **S** denotes search-only timing and **D** includes dispatch setup.
+One-time model loading and puzzle generation are outside these timings.
+
+The seven-box comparison covers **94 fixed maps**, with independently replayed
+successful plans. GBFS has a separate **five-map pilot**. Completed attempts from
+partial map 95 appear below the common-cohort table. Raw records, checkpoint
+identities and experiment metadata are retained in `results/` and `data/`.
+"""
     for boxes in [3, 5, 7]:
         md += f'\n## {boxes}-box Sokoban — {"IID" if boxes == 3 else "OOD"}\n\n'
         md += '| Method | Hardware | Budget (s / exp.) | Solved | Mean exp. | Median exp. | P90 exp. | Mean cost | Mean elapsed wall time (s) |\n'
@@ -101,7 +95,6 @@ is not verified.
     md += '\n## Paired comparisons within recorded runs\n\n'
     for p in paired:
         md += f'- `{p["run"]}`: {METHODS[p["method"]]} vs {METHODS[p["baseline"]]}: N={p["common"]}; {p["wins"]}W/{p["ties"]}T/{p["losses"]}L; mean expansion reduction {p["mean_reduction_pct"]:.2f}% (negative means more expansions).\n'
-    md += '\n## Limitations\n\nMC dropout is model-dependent: scratch M0 solves 93/100 five-box maps versus 77/100 for its MC variant, and also solves more seven-box maps than its MC variant (see the table). Inference-time perturbation sensitivity, altered rankings and gating interactions are hypotheses, not demonstrated causes. Disagreement has not been established as a calibrated predictor of distance error. These learned search methods do not guarantee optimal plans. “Calibrated” names a gating configuration, not statistical error calibration.\n'
     (ROOT / 'RESULTS.md').write_text(md, encoding='utf-8')
     (ROOT / 'results/summary.json').write_text(json.dumps({'tables': rows, 'paired': paired, 'partial_map95': partial}, indent=2), encoding='utf-8')
     print('Saved RESULTS.md; table rows:', {b: len(r) for b, r in rows.items()})

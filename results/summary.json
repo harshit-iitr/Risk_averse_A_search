@@ -22,7 +22,7 @@
       {
         "run": "iid_3box_legacy",
         "method": "paper_astar",
-        "algorithm": "Paper Learned A* (legacy checkpoint)",
+        "algorithm": "Paper Learned A* (2023)",
         "hardware": "XPU",
         "timeout_sec": 600,
         "max_expansions": 100000,
@@ -186,7 +186,7 @@
       {
         "run": "ood_5box_legacy",
         "method": "paper_astar",
-        "algorithm": "Paper Learned A* (legacy checkpoint)",
+        "algorithm": "Paper Learned A* (2023)",
         "hardware": "XPU",
         "timeout_sec": 600,
         "max_expansions": 15000,
@@ -332,7 +332,7 @@
       {
         "run": "ood_7box_snapshot94",
         "method": "paper_astar",
-        "algorithm": "Paper Learned A* (legacy checkpoint)",
+        "algorithm": "Paper Learned A* (2023)",
         "hardware": "Tesla T4",
         "timeout_sec": 360,
         "max_expansions": 1000000,

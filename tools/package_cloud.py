@@ -11,12 +11,16 @@ from src.protocol import sha256
 
 
 def package(output):
-    files = [p for folder in ['src', 'benchmarks'] for p in (ROOT / folder).glob('*.py')]
+    files = [p for folder in ['src', 'benchmarks', 'tools', 'tests'] for p in (ROOT / folder).glob('*.py')]
     files += [ROOT / 'finalSok3_pytorch.pt', *(ROOT / 'checkpoints/ensemble').glob('ensemble_model_*.pt')]
     files += [ROOT / 'data' / name for name in (
         'sokoban_3box_test.txt', 'sokoban_5box_test.txt', 'sokoban_7box_original_test.txt',
-        'sokoban_7box_original_test.provenance.json')]
+        'sokoban_7box_original_test.provenance.json', 'sokoban_3box_train.txt', 'assets_sha256.json')]
     files += [ROOT / 'README.md', ROOT / 'requirements.txt', ROOT / 'licenses/UPSTREAM_CC0.txt']
+    files += [ROOT / name for name in ('RESULTS.md', 'requirements-generation.txt')]
+    files += list((ROOT / 'docs').glob('*.md'))
+    files += [p for p in (ROOT / 'results').rglob('*') if p.is_file() and p.suffix in ('.json', '.jsonl')]
+    files += [p for p in (ROOT / 'sokoban_visuals_v2').iterdir() if p.is_file() and p.suffix in ('.html', '.md', '.png', '.svg', '.gif', '.json')]
     hashes = {str(p.relative_to(ROOT)).replace('\\', '/'): sha256(p) for p in files}
     output = Path(output)
     output.parent.mkdir(parents=True, exist_ok=True)

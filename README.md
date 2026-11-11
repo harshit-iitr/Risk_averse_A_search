@@ -1,99 +1,139 @@
-# Risk-averse heuristic search for Sokoban
+# Risk-aware A* search for Sokoban
 
-A focused college research project evaluating confidence-aware and risk-aware
-neural heuristic search. Models trained on three-box Sokoban are evaluated on
-three-box IID, five-box OOD and seven-box OOD puzzles on 10x10 grids.
+Confidence-aware and risk-aware neural heuristic search for **10×10 Sokoban**.
+The project evaluates models trained on three-box puzzles on **3-box IID,
+5-box OOD, and 7-box OOD** tasks. Trained checkpoints, fixed test sets, results,
+and solution replays are included. **No training or puzzle generation is needed
+to run the examples.**
 
-## Supported experiments
+[Results](RESULTS.md) · [Reproduce the experiments](docs/REPRODUCING.md) ·
+[Method formulas](docs/METHODS.md) · [Gallery](sokoban_visuals_v2/README.md)
 
-1. Classical A*.
-2. Paper Learned A*, using the original repository's unchanged checkpoint.
-3. Paper Learned GBFS.
-4. Fixed 50/50 Hybrid A*.
-5. MC Confidence-Aware A* — paper model.
-6. Single Scratch Model #0 A*.
-7. MC-Dropout on Scratch Model #0.
-8. Confidence-Aware Ensemble A* (`conf_20`).
-9. Calibrated Confidence-Aware Ensemble A* (`conf_50`).
-10. Risk-Averse Ensemble A* (`kappa=1`).
+## Start here
 
-The registry in `src/methods.py` is the supported method inventory. No absent
-domain/method combination is treated as an executed experiment.
-
-## Results and evidence
-
-Read [RESULTS.md](RESULTS.md) for the three tables and paired comparisons.
-Historical three-box and five-box results retain their original hardware and
-budgets. Seven-box reporting uses **94 of 100 fixed maps**, 360 seconds and
-1,000,000 expansions per method. All successful saved plans replay independently.
-The completed session stopped partway through map 95; its three completed
-attempts are listed separately in the report. Paper Learned GBFS has only five
-seven-box records. These are separate evaluation cohorts, explicitly labelled.
-
-The six existing checkpoints and datasets are copied byte-for-byte. Asset hashes
-are in `data/assets_sha256.json`. 
-## Methods
-
-Let `p_m(s)` be each member's own online percentile, with mean `mu_p`, variance
-`v_p` and standard deviation `sigma_p`. This makes disagreement invariant to
-constant cross-model offsets.
-
-- MC confidence gate: `lambda = 0.2 + 0.8 * max(0, 1 - 4*v_p)`.
-- Ensemble confidence gate: `lambda = lambda_min + (1-lambda_min)*max(0, 1-2.5*sigma_p)`, with `lambda_min=0.2` or `0.5`.
-- Confidence priority: `f = g + 50*(lambda*mu_p + (1-lambda)*p_classical)`.
-- Risk priority: `f = g + 50*min(1, mu_p + sigma_p)`.
-- Fixed hybrid: the MC-based percentile blend with `lambda=0.5`.
-
-All MC configurations use five samples with dropout 0.10. The ensemble
-configurations use five trained members. The classical heuristic uses minimum
-Manhattan bipartite matching. The retained experiments do not use symbolic
-deadlock pruning. Original loop behavior, tie breaking and stopping counters are
-preserved; timeout/expansion checks can slightly overrun their nominal boundary.
-
-## Run
+Clone the repository and install the evaluation dependencies:
 
 ```bash
-pip install -r requirements.txt
+git clone https://github.com/harshit-iitr/Risk_averse_A_search.git
+cd Risk_averse_A_search
+python -m venv .venv
+```
+
+Activate the environment:
+
+```powershell
+# Windows PowerShell
+.venv\Scripts\Activate.ps1
+```
+
+```bash
+# macOS / Linux
+source .venv/bin/activate
+```
+
+```bash
+python -m pip install -r requirements.txt
+```
+
+Use a PyTorch build that supports your accelerator to run on NVIDIA CUDA or
+Intel XPU. CPU evaluation also works. `--device auto` selects CUDA, then XPU,
+then CPU; specify `--device cpu`, `--device cuda:0`, or `--device xpu` explicitly
+when comparing runs.
+
+## Fast sanity check
+
+```bash
+python tools/sanity_check.py --device cpu
+```
+
+This checks the included asset hashes and frozen seven-box boards, replays saved
+successful solutions from the first **five seven-box maps**, and runs **all ten
+methods** with the actual checkpoints on a one-push puzzle. It prints a final
+`PASS` only when every check succeeds. The one-push execution verifies the setup;
+the next command performs the real seven-box experiment.
+
+## Reproduce five seven-box maps with every method
+
+```bash
+python benchmarks/run_benchmark.py --boxes 7 --start-map 1 --end-map 5 --device auto --threads 2 --output output/seven_box_5maps
+python tools/report_run.py output/seven_box_5maps --expected-maps 5 --require-all-methods
+```
+
+Omitting `--methods` selects **all ten supported methods**. This gives 50 attempts,
+with 360 seconds and 1,000,000 expansions available per attempt. Allow up to
+**five hours of search time**, plus setup, for this real benchmark; use the fast
+sanity check first. Actual runtime depends on the device and puzzle outcomes.
+
+The output folder contains:
+
+| File | Contents |
+|---|---|
+| `metadata.json` | Device, software versions, seeds, budgets, source and asset hashes |
+| `records.jsonl` | One record per attempt, including actions and timings |
+| `report.md` | Readable results table for this run |
+| `summary.csv` / `summary.json` | Results for further analysis |
+
+Every returned solution is replayed independently. Repeat the benchmark command
+with the same output folder to resume missing attempts. Run the report command
+again after completion. See [the reproduction guide](docs/REPRODUCING.md) for
+selected methods, full cohorts, and cloud packaging.
+
+## Included methods
+
+| Method | Command-line ID |
+|---|---|
+| Classical A* | `classical_astar` |
+| Paper Learned A* (2023) | `paper_astar` |
+| Paper Learned GBFS | `paper_gbfs` |
+| Fixed 50/50 Hybrid A* | `fixed_hybrid_astar` |
+| MC Confidence-Aware A* — paper model | `paper_mc_astar` |
+| Single Scratch Model #0 A* | `single_astar` |
+| MC-Dropout on Scratch Model #0 | `single_mc_astar` |
+| Confidence-Aware Ensemble A* | `ensemble_conf_020` |
+| Calibrated Confidence-Aware Ensemble A* | `ensemble_conf_050` |
+| Risk-Averse Ensemble A* | `ensemble_risk` |
+
+The confidence settings refer to learned-weight floors **0.20 and 0.50**.
+Both use heuristic scale **C = 50**. Risk-aware search uses **κ = 1**.
+[Method details and the complete parameter table](docs/METHODS.md).
+
+## Results and visuals
+
+[RESULTS.md](RESULTS.md) contains the three domain tables, elapsed timings, and
+paired comparisons. The seven-box comparison covers **94 fixed maps**; GBFS has
+a separately labelled five-map pilot, and completed map-95 attempts are listed
+separately. The gallery contains plots and diagnostic Sokoban replays with their
+cohort labels. Historical figures use an 82-map snapshot.
+
+For example, on the **70 seven-box puzzles solved by both methods**, the
+risk-aware pipeline averages **2,592.9 expansions** versus **19,496.9** for
+Paper Learned A*: a **7.52× ratio of mean expansions**. In the 94-map cohort,
+the methods solve 74 and 70 puzzles, respectively.
+
+## Repository map
+
+| Location | Purpose |
+|---|---|
+| `src/` | Model, Sokoban environment, heuristics, and search implementations |
+| `benchmarks/` | Seeded evaluation runner |
+| `checkpoints/ensemble/` | Five trained members |
+| `finalSok3_pytorch.pt` | Included paper-model checkpoint |
+| `data/` | Training and frozen evaluation puzzles, provenance, and checksums |
+| `results/` | Recorded experiments and machine-readable summaries |
+| `tools/` | Sanity check, run reports, cloud packaging, and optional training |
+| `tests/` | Automated project checks |
+| `sokoban_visuals_v2/` | HTML gallery, figures, and replay assets |
+
+For development checks:
+
+```bash
 python -m unittest discover -s tests -v
-python benchmarks/run_benchmark.py --boxes 7 --smoke-test --device cpu --output output/smoke
-python benchmarks/run_benchmark.py --boxes 7 --methods paper_astar paper_mc_astar ensemble_conf_020 ensemble_conf_050 ensemble_risk --start-map 1 --end-map 100 --device cuda:0 --output output/seven_box
 ```
 
-The default `uniform` profile gives every selected method 360 seconds and
-1,000,000 expansions. `--profile historical` retains the recorded 3/5-box budget
-families; it is not a claim of identical wall-clock or stochastic outcomes.
-Three-box baseline search keeps its original goal-score behavior separately
-from the five/seven-box baseline. Each invocation has an 11.75-hour wall allowance
-by default and saves every attempt. Repeat the same command/output to resume;
-code, data, checkpoints, device, seed and settings must match. Separate jobs need
-separate output directories. A one-push smoke run is validation, not benchmark data.
+## References and attribution
 
-```bash
-python tools/build_report.py
-python tools/package_cloud.py
-```
-
-The cloud zip contains an explicit allowlist of code, checkpoints, test data and
-upstream license. It contains no credentials. Extract it into a Kaggle GPU
-session and run the benchmark command above with a `/kaggle/working/...` output
-directory. Frozen seven-box data is included: regeneration is unnecessary.
-
-Optional training code is retained in `tools/train_deep_ensemble.py`; no new
-training was done for this migration. Generator dependencies are separated in
-`requirements-generation.txt`. Never replace the frozen evaluation set.
-
-## Limitations
-
-MC helps the legacy checkpoint but harms trained M0 in the recorded comparisons.
-Dropout sensitivity and gating interactions are hypotheses, not established
-causes. “Calibrated” identifies the gate setting, not statistical error calibration.
-Uncertainty has not been established as a predictor of distance error. Learned
-heuristics do not guarantee optimal solutions. Upstream CC0 text is preserved
-in `licenses/UPSTREAM_CC0.txt`; no new rights over checkpoints are asserted.
-
-
-## Gallery and figures
-
-Gallery figures retain the earlier **82-map snapshot**; current 94-map numbers are in RESULTS.md.
-
-Browse the [visual gallery and captions](sokoban_visuals_v2/README.md) for plots, SVG exports and animated Sokoban replays. Open [gallery.html](sokoban_visuals_v2/gallery.html) locally for the complete HTML layout. The Map 76 animations are separately captured diagnostic trajectories, with benchmark numbers and provenance clearly labelled.
+The Paper Learned methods follow the project implementation based on
+[Chrestien et al., *Optimize Planning Heuristics to Rank, not to Estimate
+Cost-to-Goal*, NeurIPS 2023](https://arxiv.org/abs/2310.19463).
+The upstream license is retained in [licenses/UPSTREAM_CC0.txt](licenses/UPSTREAM_CC0.txt).
+Dataset and checkpoint identities are recorded in `data/assets_sha256.json`.

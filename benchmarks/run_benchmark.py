@@ -6,6 +6,7 @@ import os
 from pathlib import Path
 import random
 import sys
+import subprocess
 import time
 
 import numpy as np
@@ -78,6 +79,9 @@ def budget(boxes, method, profile):
 
 
 def run(args):
+    if args.threads < 1:
+        raise ValueError('threads must be positive')
+    torch.set_num_threads(args.threads)
     device = get_device(args.device)
     if args.smoke_test:
         boards = [smoke_board()]
@@ -96,6 +100,7 @@ def run(args):
     checkpoints = {p: sha256(ROOT / p) for p in CHECKPOINTS}
     meta = {'boxes': args.boxes, 'kind': 'smoke_validation' if args.smoke_test else 'evaluation',
             'methods': methods, 'profile': args.profile, 'seed': args.seed,
+            'requested_maps': list(range(args.start_map, end + 1)), 'torch_threads': args.threads,
             'hardware': get_device_name(device), 'python': sys.version.split()[0],
             'torch': torch.__version__, 'numpy': np.__version__,
             'checkpoints': checkpoints, 'source_sha256': {str(p.relative_to(ROOT)): sha256(p) for folder in ['src', 'benchmarks'] for p in (ROOT / folder).glob('*.py')},
@@ -130,6 +135,11 @@ def run(args):
         if not pending:
             print('No pending attempts', flush=True)
             return
+        print(f'Run: {len(pending)} pending attempts on {meta["hardware"]}; output={out}', flush=True)
+        if not (out / 'requirements_resolved.txt').exists():
+            packages = subprocess.run([sys.executable, '-m', 'pip', 'freeze'], capture_output=True, text=True)
+            if packages.returncode == 0:
+                (out / 'requirements_resolved.txt').write_text(packages.stdout, encoding='utf-8')
         loaded = []
         for name in CHECKPOINTS:
             model = ChrestienHeuristicNet(dim=10).to(device)
@@ -150,15 +160,18 @@ def run(args):
                     torch.cuda.manual_seed_all(seed)
                 if hasattr(torch, 'xpu') and torch.xpu.is_available():
                     torch.xpu.manual_seed_all(seed)
+                print(f'START map={map_id} method={method} timeout={timeout:g}s cap={cap}', flush=True)
+                dispatch_started = time.perf_counter()
                 solved, exp, cost, actions, seconds, stats = dispatch(
                     method, boards[map_id - 1], loaded[0], loaded[1:], device, args.boxes, timeout, cap)
+                wall_seconds = time.perf_counter() - dispatch_started
                 actions = list(map(int, actions))
                 verified = bool(solved and replay_plan(boards[map_id - 1], actions))
                 if solved and (not verified or cost != len(actions)):
                     raise ValueError('Invalid returned solution')
                 row = {'map_id': map_id, 'method': method, 'seed': seed, 'solved': bool(solved),
                        'verified': verified, 'expansions': int(exp), 'cost': float(cost) if solved else None,
-                       'actions': actions, 'time_sec': float(seconds), 'evidence': 'new_run',
+                       'actions': actions, 'time_sec': float(seconds), 'wall_time_sec': float(wall_seconds), 'evidence': 'new_run',
                        'run_fingerprint': fingerprint(meta), **stats}
                 f.write(json.dumps(row, allow_nan=False) + '\n')
                 f.flush()
@@ -175,6 +188,7 @@ if __name__ == '__main__':
     parser.add_argument('--profile', choices=['uniform', 'historical'], default='uniform')
     parser.add_argument('--device', default='auto')
     parser.add_argument('--seed', type=int, default=42)
+    parser.add_argument('--threads', type=int, default=2, help='PyTorch CPU intra-op threads (recorded in metadata)')
     parser.add_argument('--start-map', type=int, default=1)
     parser.add_argument('--end-map', type=int)
     parser.add_argument('--wall-hours', type=float, default=11.75)
